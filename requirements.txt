@@ -8,5 +8,6 @@ sqlalchemy
 langchain-openai
 transformers
 fastapi
+uvicorn
 
 -e .
