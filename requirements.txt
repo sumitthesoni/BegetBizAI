@@ -9,5 +9,6 @@ langchain-openai
 transformers
 fastapi
 uvicorn
+cachetools
 
 -e .
