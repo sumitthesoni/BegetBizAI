@@ -1,0 +1,12 @@
+python-dotenv
+requests
+langchain-groq
+langchain
+pillow
+langgraph
+sqlalchemy
+langchain-openai
+transformers
+fastapi
+
+-e .

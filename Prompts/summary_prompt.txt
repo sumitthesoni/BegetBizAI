@@ -1,0 +1,24 @@
+Progressively summarize the lines of conversation provided, adding onto the previous summary and returning a new summary.
+
+⚠️ Always retain and preserve the user's Name and Company if already known — do not remove them in any future summaries.
+⚠️ Always retain important links with reason why this link is used for.
+
+EXAMPLE
+Current summary:
+The human asks what the AI thinks of artificial intelligence. The AI thinks artificial intelligence is a force for good.
+
+New lines of conversation:
+Human: Why do you think artificial intelligence is a force for good?
+AI: Because artificial intelligence will help humans reach their full potential.
+
+New summary:
+The human asks what the AI thinks of artificial intelligence. The AI thinks artificial intelligence is a force for good because it will help humans reach their full potential.
+END OF EXAMPLE
+
+Current summary:
+{summary}
+
+New lines of conversation:
+{new_lines}
+
+New summary:
