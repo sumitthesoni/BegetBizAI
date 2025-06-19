@@ -10,5 +10,8 @@ transformers
 fastapi
 uvicorn
 cachetools
+httpx
+tenacity
+pydantic
 
 -e .
