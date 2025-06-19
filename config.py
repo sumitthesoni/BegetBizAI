@@ -20,4 +20,4 @@ debugging_path=os.path.join(BASE_DIR, 'debugging')
 log_path=os.path.join(debugging_path, 'logs.log')
 
 # Operation team number
-OPERATION_TEAM_NUMBER="917340098302"
+OPERATION_TEAM_NUMBER="917978022640"
