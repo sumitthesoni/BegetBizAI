@@ -1,7 +1,6 @@
 # ––– Standard Library Imports –––
 import os
 import sys
-import random
 
 # ––– Third-Party/External Library Imports –––
 import requests
@@ -97,26 +96,31 @@ def fetch_google_images(query: str) -> List[str]:
         if not candidates:
             return 'No images retrieved, Attempt to retrieve the image using another but accurate search phrase.'
 
-        # Pick one at random
-        selected_image = random.choice(candidates)
-        # 3. Ask GPT-4o to analyze the image
-        response = openai.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant that describes and analyzes images."},
-                {"role": "user", "content": [
-                    {"type": "text", "text": "Describe this image in detail and infer what it's about."},
-                    {"type": "image_url", "image_url": {"url": selected_image}},
-                ]}
-            ],
-            max_tokens=800,
-            temperature=0.5
-        )
+        # Attempt each candidate until one succeeds
+        for url_candidate in candidates:
+            try:
+                analysis = openai.chat.completions.create(
+                    model='gpt-4o',
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant that describes and analyzes images."},
+                        {"role": "user", "content": [
+                            {"type": "text", "text": "Describe this image in detail and infer what it's about."},
+                            {"type": "image_url", "image_url": {"url": url_candidate}},
+                        ]}
+                    ],
+                    max_tokens=800,
+                    temperature=0.5
+                )
+                summary = analysis.choices[0].message.content
+                if summary:
+                    return [url_candidate, summary]
+            except openai.BadRequestError:
+                # Skip invalid URL and try next
+                continue
 
-        # Append (image_url, summary) to the list
-        result=response.choices[0].message.content
-        if result:
-            return [selected_image,result]
+        # If loop ends without success
+        return "All image URLs failed analysis. Please try another query or inform the user that the image cannot be fetched due to a technical issue."
+
     except Exception as e:
-        # Raise custom exception for any error
+        # Wrap any unexpected errors
         raise customException(e, sys)
