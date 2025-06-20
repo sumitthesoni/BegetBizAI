@@ -20,7 +20,8 @@ from Whatsapp.utils.whatsapp_image_to_https import whatsapp_image_to_https  # Co
 from Memory.sqldatabase import get_image_store, update_image_store  # Persistent storage for images
 from utils.analyze_image import analyze_image  # Image analysis utility
 
-from debugging.logger import logging  # Custom logger
+# from debugging.logger import logging  # Custom logger
+import logging
 from debugging.exception import customException  # Exception wrapper
 
 # Langsmith for tracing
