@@ -2,8 +2,7 @@ import os
 import httpx
 import asyncio
 import sys
-# from debugging.logger import logging
-import logging
+from debugging.logger import logging
 from debugging.exception import customException
 from dotenv import load_dotenv
 from langsmith.run_trees import RunTree
@@ -11,13 +10,6 @@ import warnings # For ignoring the warnings
 warnings.filterwarnings("ignore")
 
 load_dotenv()
-
-# Logging configuration to print all logs to the console
-logging.basicConfig(
-    level=logging.DEBUG,  # Set to DEBUG to see all debug logs
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[logging.StreamHandler(sys.stdout)]
-)
 
 # ─── Environment Configuration ───
 WHATSAPP_API_URL       = os.getenv("WHATSAPP_API_URL")
