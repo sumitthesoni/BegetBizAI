@@ -106,12 +106,11 @@ async def output_handler(output, phone_number):
         
     # Check if any URLs were found in the message
     if urls:
-        summary_keywords = ["summary", "summarize", "summarized", "summarization", "recap", "brief", "overview"]
-        required_keywords = ["name", "company", "service"]
+        required_keywords = ["name", "company", "service","deadline"]
         last_content_lower = last_content.lower()
         
         # Checking if last content holds summary or not
-        if (any(word in last_content_lower for word in summary_keywords) and all(word in last_content_lower for word in required_keywords)):
+        if all(word in last_content_lower for word in required_keywords):
             logging.info("LLM sent Summary")
             await send_text_message(to=phone_number, message=last_content)
             return None
