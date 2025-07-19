@@ -1,6 +1,7 @@
 # ––– Standard Library Imports –––
 import os
 import sys
+import random
 
 # ––– Third-Party/External Library Imports –––
 import requests
@@ -95,7 +96,8 @@ def fetch_google_images(query: str) -> List[str]:
 
         if not candidates:
             return 'No images retrieved, Attempt to retrieve the image using another but accurate search phrase.'
-
+        
+        candidates=random.shuffle(candidates)
         # Attempt each candidate until one succeeds
         for url_candidate in candidates:
             try:
