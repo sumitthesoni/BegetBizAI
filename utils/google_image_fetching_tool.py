@@ -97,7 +97,9 @@ def fetch_google_images(query: str) -> List[str]:
         if not candidates:
             return 'No images retrieved, Attempt to retrieve the image using another but accurate search phrase.'
         
-        candidates=random.shuffle(candidates)
+        # Shuffling candidates
+        random.shuffle(candidates)
+        
         # Attempt each candidate until one succeeds
         for url_candidate in candidates:
             try:
