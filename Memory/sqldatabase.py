@@ -6,7 +6,7 @@ import sqlite3
 from dotenv import load_dotenv
 from debugging.logger import logging
 from debugging.exception import customException
-from config import DB_PATH,SUMMARY_PROMPT_PATH
+from config import DB_PATH,SUMMARY_PROMPT_PATH,CRED_PATH
 import warnings
 
 # Ignore all warnings
@@ -17,6 +17,8 @@ from langchain_groq import ChatGroq
 from langchain.memory import ConversationSummaryBufferMemory
 from langchain.schema import messages_to_dict, messages_from_dict
 from langchain.prompts import PromptTemplate
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 # Loading GROQ_API_KEY
 load_dotenv()
@@ -46,6 +48,15 @@ CREATE TABLE IF NOT EXISTS chat_sessions(
     image_store TEXT
 )''')
 conn.commit()
+
+# initialize Firebase only once
+if not firebase_admin._apps:
+    #Firebase init
+    cred = credentials.Certificate(CRED_PATH)
+    firebase_admin.initialize_app(cred)
+
+# Firestore Client
+fire_db = firestore.client()
 
 # Fetching summary prompt
 with open(SUMMARY_PROMPT_PATH,encoding="utf-8") as f:
@@ -121,6 +132,24 @@ def save_memory(thread_id, memory):
     except Exception as e:
         logging.warning(f"error occurred during saving memory : error {e}")
         raise customException(e,sys)   
+    
+    """
+    Persist the memory object to Firestore.
+    Saves full buffer of messages (excluding last two system ones) and the moving summary.
+    """
+    try:
+        msgs = memory.chat_memory.messages
+        msgs_json = json.dumps(messages_to_dict(msgs[:-2]))  # exclude system summary messages
+        summary = memory.moving_summary_buffer or ""
+
+        fire_db.collection("chat_sessions").document(thread_id).set({
+            "messages": msgs_json,
+            "summary": summary
+        }, merge=True)
+
+    except Exception as e:
+        logging.warning(f"error occurred during saving memory in firestore : error {e}")
+        raise customException(e, sys)
 
 async def update_image_store(thread_id, image_store_data):
     """

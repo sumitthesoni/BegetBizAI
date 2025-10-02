@@ -21,3 +21,6 @@ log_path=os.path.join(debugging_path, 'logs.log')
 
 # Operation team number
 OPERATION_TEAM_NUMBER="917978022640"
+
+# Firebase cred
+CRED_PATH=os.path.join(BASE_DIR,'begetbiz-e3f35-firebase-adminsdk-fbsvc-0a2e7951dd.json')
