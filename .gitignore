@@ -4,4 +4,4 @@ BegetBiz.egg-info
 notebook
 venv
 begetbiz-e3f35-firebase-adminsdk-fbsvc-0a2e7951dd
-config
+config.py
