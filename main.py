@@ -34,7 +34,6 @@ if not VERIFY_TOKEN:
     logging.error("VERIFY_TOKEN is not set in environment variables.")
     raise RuntimeError("VERIFY_TOKEN must be set in environment variables.")
 
-@app.api_route("/webhook", methods=["GET", "POST"])
 @app.api_route("/webhook/", methods=["GET", "POST"])
 async def webhook(
     request: Request,
