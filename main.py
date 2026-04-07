@@ -35,6 +35,7 @@ if not VERIFY_TOKEN:
     raise RuntimeError("VERIFY_TOKEN must be set in environment variables.")
 
 @app.api_route("/webhook", methods=["GET", "POST"])
+@app.api_route("/webhook/", methods=["GET", "POST"])
 async def webhook(
     request: Request,
     hub_mode: str = Query(default=None, alias="hub.mode"),
