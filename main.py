@@ -29,7 +29,7 @@ USER_PROCESSING_STATE = defaultdict(lambda: False)
 USER_QUEUES = defaultdict(asyncio.Queue)
 BLOCKED_NOTICE_SENT = TTLCache(maxsize=1000, ttl=30)  # Avoid sending notice again for 30s
 
-VERIFY_TOKEN = "BegetBegetBiz*1"
+VERIFY_TOKEN = "BegetBegetBiz*2"
 if not VERIFY_TOKEN:
     logging.error("VERIFY_TOKEN is not set in environment variables.")
     raise RuntimeError("VERIFY_TOKEN must be set in environment variables.")
