@@ -3,7 +3,7 @@ requests==2.32.3
 langchain-groq==0.3.2
 langchain==0.3.25
 pillow==11.2.1
-langgraph==0.4.7
+langgraph
 SQLAlchemy==2.0.41
 langchain-openai==0.3.21
 transformers==4.52.4
